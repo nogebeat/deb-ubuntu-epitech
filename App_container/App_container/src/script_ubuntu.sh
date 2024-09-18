@@ -2,6 +2,7 @@
 
 # #!/bin/bash
 
+sudo apt-get install emacs
 
 # sudo apt install docker.io docker-compose
 
