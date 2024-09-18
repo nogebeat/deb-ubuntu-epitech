@@ -2,26 +2,28 @@
 
 # #!/bin/bash
 
-sudo apt-get install emacs
+sudo apt-get update -y
 
-# sudo apt install docker.io docker-compose
+sudo apt-get install -y emacs*
 
-# systemctl enable --now docker
+sudo apt install -y docker.io docker-compose
 
-# systemctl status docker
+systemctl enable --now docker
 
-# groupadd docker
+systemctl status docker
 
-# sudo usermod -aG docker $USER
+groupadd docker
 
-# docker --version
+sudo usermod -aG docker $USER
+
+docker --version
 
 
-# sudo cp ./src/coding-style /usr/bin
+sudo cp ./src/coding-style /usr/bin
 
-# coding-style . .
+coding-style . .
 
-# ./src/epitech-emacs/INSTALL.sh local
+./src/epitech-emacs/INSTALL.sh local
 
 cd src/epitech-emacs/
 

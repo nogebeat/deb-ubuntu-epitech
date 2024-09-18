@@ -1,9 +1,0 @@
-
-ls -lR
-chmod 777 *
-chmod 777 src/*
-chmod 777 src/epitech-emacs/*
-chmod 777 src/epitech-emacs/src/*
-chmod 777 src/epitech-emacs/src/epitech/*
-chmod 777 src/epitech-emacs/src/site-start.d/*
-ls -lR
