@@ -1,9 +1,0 @@
-
-ls -lR
-chmod 777 App_container/App_container/*
-chmod 777 App_container/App_container/src/*
-chmod 777 App_container/App_container/src/epitech-emacs/*
-chmod 777 App_container/App_container/src/epitech-emacs/src/*
-chmod 777 App_container/App_container/src/epitech-emacs/src/epitech/*
-chmod 777 App_container/App_container/src/epitech-emacs/src/site-start.d/*
-ls -lR
