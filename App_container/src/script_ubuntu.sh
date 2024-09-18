@@ -6,11 +6,11 @@ sudo apt-get update -y
 
 sudo apt-get install -y emacs*
 
-sudo apt install -y docker.io docker-compose
+sudo apt install -y docker.io docker-compose curl
 
 systemctl enable --now docker
 
-systemctl status docker
+# systemctl status docker
 
 groupadd docker
 
