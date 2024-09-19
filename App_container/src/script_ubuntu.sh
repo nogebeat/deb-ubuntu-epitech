@@ -31,7 +31,7 @@ clear
 
 ls
 
-sudo ./INSTALL.sh local
+./INSTALL.sh local
 
 
 tput setaf 1
@@ -48,6 +48,8 @@ tput setaf 1
         echo "|_|       \\\|_| NOGE"
 	tput sgr0
 
-echo "alias emacs='emacs -nw'" >> ~/bashrc
+echo "alias emacs='emacs -nw'" >> ~/.bashrc
+
+source ~/.bashrc
 
 # ./INSTALL.sh system
