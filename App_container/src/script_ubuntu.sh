@@ -4,9 +4,36 @@
 
 sudo apt-get update -y
 
-sudo apt-get install -y emacs*
+sudo apt-get install -y gcc emacs* make \
+                        cmake \
+                        perl \
+                        gcc \
+                        curl \
+                        wget \
+                        build-essential \
+                        ocaml \
+                        libncurses* \
+                        git \
+                        libx11-dev \
+                        libxmu-dev \
+                        libxi-dev \
+                        libgl-dev \
+                        libopenal-dev \
+                        libxrandr-dev \
+                        libudev-dev \
+                        libglew-dev \
+                        libjpeg-dev \
+                        libalut-dev \
+                        libcsfml*
+
 
 sudo apt install -y docker.io docker-compose curl
+
+# curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+  
+#   sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/ms-teams stable main" > /etc/apt/sources.list.d/teams.list'
+
+#   snap install teams-for-linux
 
 systemctl enable --now docker
 
