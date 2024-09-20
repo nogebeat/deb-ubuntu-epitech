@@ -28,7 +28,7 @@ sudo apt-get install -y gcc emacs* make \
                         libqt5*
 
 
-sudo dpkg -i algobox.deb
+sudo dpkg -i ./src/algobox.deb
 
 sudo apt install -y docker.io docker-compose
 
@@ -59,6 +59,9 @@ ls
 
 ./INSTALL.sh local
 
+echo "alias emacs='emacs -nw'" >> ~/.bashrc
+
+source ~/.bashrc
 
 tput setaf 1
 	echo "__**/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/CODING STYLE BY NOGE\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\**\*\*\*\*\**__"
@@ -74,8 +77,6 @@ tput setaf 1
         echo "|_|       \\\|_| NOGE"
 	tput sgr0
 
-echo "alias emacs='emacs -nw'" >> ~/.bashrc
 
-source ~/.bashrc
 
 # ./INSTALL.sh system
