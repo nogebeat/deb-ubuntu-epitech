@@ -24,14 +24,13 @@ sudo apt-get install -y gcc emacs* make \
                         libglew-dev \
                         libjpeg-dev \
                         libalut-dev \
-                        libcsfml*
+                        libcsfml* \
+                        libqt5*
 
 
-sudo apt install -y docker.io docker-compose curl
+sudo dpkg -i algobox.deb
 
-curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-  
-  sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/ms-teams stable main" > /etc/apt/sources.list.d/teams.list'
+sudo apt install -y docker.io docker-compose
 
   snap install teams-for-linux
 
