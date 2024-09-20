@@ -11,7 +11,7 @@
 
 
 ``` bash
-git clone 
+git clone https://github.com/nogebeat/deb-ubuntu-epitech.git
 
 ```
 - Branché la clé USB dans l'ordinateur 
