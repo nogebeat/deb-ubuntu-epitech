@@ -1,6 +1,6 @@
-# Processus d'installation de dépendances Epitech Ubuntu
+# PROCESSUS D'INSTALLATION DE DEPENDANCES EPITECH UBUNTU 
 
-## Prerequis :
+## PREREQUIS:
 
 - Une bonne Connexion Internet 
 - Une clé USB booté avec Ubuntu 
