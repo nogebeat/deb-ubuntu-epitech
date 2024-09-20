@@ -29,11 +29,11 @@ sudo apt-get install -y gcc emacs* make \
 
 sudo apt install -y docker.io docker-compose curl
 
-# curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
   
-#   sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/ms-teams stable main" > /etc/apt/sources.list.d/teams.list'
+  sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/ms-teams stable main" > /etc/apt/sources.list.d/teams.list'
 
-#   snap install teams-for-linux
+  snap install teams-for-linux
 
 systemctl enable --now docker
 
