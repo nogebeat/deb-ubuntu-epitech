@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Installer Docker
-Comment=Installe Docker avec une interface graphique
-Exec=sh ./script_ubuntu.sh
-Icon=utilities-terminal
-Terminal=false
-Type=Application
-Categories=Utility;
