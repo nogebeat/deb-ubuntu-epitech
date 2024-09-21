@@ -27,6 +27,9 @@ sudo apt-get install -y gcc emacs* make \
                         libcsfml* \
                         libqt5*
 
+unzip ./src/discord.zip
+
+sudo dpkg -i ./discord.deb
 
 sudo dpkg -i ./src/algobox.deb
 
