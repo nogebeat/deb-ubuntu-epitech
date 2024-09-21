@@ -1,12 +1,28 @@
 #!/bin/bash
-sudo apt-get install zenity
-!/bin/bash
+
+
+
 chmod 777 *
 chmod 777 src/*
 chmod 777 src/epitech-emacs/*
 chmod 777 src/epitech-emacs/src/*
 chmod 777 src/epitech-emacs/src/epitech/*
 chmod 777 src/epitech-emacs/src/site-start.d/*
+
+
+cd ./src/epitech-emacs/
+
+ls
+
+./INSTALL.sh local
+
+cd ..; cd ..
+
+pwd
+
+ls
+
+ls ~/.emacs.d/lisp/
 
 if zenity --question --text="Voulez-vous installer les logiciels prérequis ?"; then
     PASSWORD=$(zenity --password --title="Mot de passe requis")
