@@ -14,11 +14,11 @@ unzip ./src/discord.zip
 
 sudo dpkg -i ./discord.deb
 
-sudo dpkg -i ./src/algobox.deb
+# sudo dpkg -i ./src/algobox.deb
 
 sudo apt install -y docker.io docker-compose
 
-snap install teams-for-linux
+# snap install teams-for-linux
 
 sudo systemctl enable --now docker
 
@@ -32,6 +32,7 @@ sudo cp ./src/coding-style /usr/bin
 coding-style . .
 
 sudo cp -r ./src/epitech-emacs /usr/local/bin/
+
 sudo chmod +x /usr/local/bin/epitech-emacs/*
 
 /usr/local/bin/epitech-emacs/INSTALL.sh local
