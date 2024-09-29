@@ -4,7 +4,7 @@ clear
 
 cd /tmp
 
-git clone https://github.com/nogebeat/deb-ubuntu-epitech.git
+#git clone https://github.com/nogebeat/deb-ubuntu-epitech.git
 
 git clone https://github.com/Epitech/epitech-emacs.git
 
