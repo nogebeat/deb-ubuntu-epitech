@@ -17,7 +17,6 @@ chmod 777 *
 
 cd ~
 
-clear
 
 tput setaf 1
 echo " _           _"
@@ -30,5 +29,5 @@ echo "| |    \\\   | |"
 echo "| |     \\\  | | EPITECH DIGITAL SCHOOL"
 echo "| |      \\\ | |"
 echo "|_|       \\\|_| NOGE"
-tput sgr0'
+tput sgr0
 
