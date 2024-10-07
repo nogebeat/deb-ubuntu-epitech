@@ -12,9 +12,6 @@ chmod 777 *
 ./script_ubuntu
 
 
-cd ~
-
-
 tput setaf 1
 echo " _           _"
 echo "| |\\        | | NOGE"
