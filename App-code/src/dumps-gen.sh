@@ -15,6 +15,20 @@ chmod 777 *
 ./script_ubuntu
 
 
-cd ..
+cd ~
 
-rm -ffr App-code 
+clear
+
+tput setaf 1
+echo " _           _"
+echo "| |\\        | | NOGE"
+echo "| |\\\       | |"
+echo "| | \\\      | | EPITECH BENIN"
+echo "| |  \\\     | |"
+echo "| |   \\\    | | NOGE"
+echo "| |    \\\   | |"
+echo "| |     \\\  | | EPITECH DIGITAL SCHOOL"
+echo "| |      \\\ | |"
+echo "|_|       \\\|_| NOGE"
+tput sgr0'
+
