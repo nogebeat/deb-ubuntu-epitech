@@ -1,8 +1,5 @@
 #!/bin/bash 
 
-sudo apt install git -y
-
-cd ~
 
 git clone https://github.com/nogebeat/deb-ubuntu-epitech.git
 
