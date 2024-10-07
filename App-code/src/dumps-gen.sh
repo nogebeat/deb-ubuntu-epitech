@@ -6,6 +6,8 @@ cd ~
 
 git clone https://github.com/nogebeat/deb-ubuntu-epitech.git
 
+cd deb-ubuntu-epitech
+
 cd App-code
 
 chmod 777 *
