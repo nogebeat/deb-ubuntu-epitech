@@ -26,7 +26,11 @@ sudo apt --fix-broken install -y || erreur "La réparation des paquets brisés a
 
 wget -O discord.deb "https://discord.com/api/download?platform=linux&format=deb" || erreur "Impossible de creer le fichier discord.deb."
 
+wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" || erreur "Impossible de creer le fichier de google"
+
 sudo dpkg -i ./discord.deb || erreur "L'installation de Discord a échoué."
+
+sudo dpkg -i google-chrome-stable_current_amd64.deb || erreur "L'installation de Google a échoué."
 
 sudo apt install -y docker.io docker-compose || erreur "L'installation de Docker a échoué."
 
