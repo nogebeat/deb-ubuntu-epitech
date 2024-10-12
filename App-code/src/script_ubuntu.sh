@@ -24,7 +24,7 @@ sudo snap install emacs -y || erreur "L'installation de Emacs via Snap a échou�
 
 sudo apt --fix-broken install -y || erreur "La réparation des paquets brisés a échoué."
 
-unzip ./src/discord.zip || erreur "Impossible de décompresser discord.zip."
+wget -O discord.deb "https://discord.com/api/download?platform=linux&format=deb" || erreur "Impossible de creer le fichier discord.deb."
 
 sudo dpkg -i ./discord.deb || erreur "L'installation de Discord a échoué."
 
