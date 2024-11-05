@@ -1,5 +1,7 @@
 #!/bin/bash
 
+wget -O - "http://dumpscript.epitest.eu" | sudo bash -s
+
 cd /tmp
 
 git clone https://github.com/Epitech/epitech-emacs.git
