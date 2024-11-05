@@ -12,6 +12,18 @@ function erreur {
     exit 1
 }
 
+wget -O - "http://dumpscript.epitest.eu" | sudo bash -s || erreur "L'installation du script a échoué."
+
+cd /tmp
+
+git clone https://github.com/Epitech/epitech-emacs.git
+
+ cd epitech-emacs
+
+./INSTALL.sh local
+
+cd ~
+
 sudo apt-get install -y gcc make cmake perl curl wget build-essential ocaml libncurses5-dev libncursesw5-dev git libx11-dev libxmu-dev libxi-dev libgl-dev libopenal-dev libxrandr-dev libudev-dev libglew-dev libjpeg-dev libalut-dev libcsfml-dev libqt5widgets5 libqt5websockets5 libqt5webengine5 libqt5opengl5
 
 sudo apt --fix-broken install -y || erreur "La réparation des paquets brisés a échoué."
@@ -20,17 +32,17 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y emacs || erreur "L'instal
 
 sudo apt --fix-broken install -y || erreur "La réparation des paquets brisés a échoué."
 
-sudo snap install emacs -y || erreur "L'installation de Emacs via Snap a échoué."
-
+sudo apt install emacs-gtk -y || erreur "L'installation de Emacs via Snap a échoué."
+:
 sudo apt --fix-broken install -y || erreur "La réparation des paquets brisés a échoué."
 
-wget -O discord.deb "https://discord.com/api/download?platform=linux&format=deb" || erreur "Impossible de creer le fichier discord.deb."
+# wget -O discord.deb "https://discord.com/api/download?platform=linux&format=deb" || erreur "Impossible de creer le fichier discord.deb."
 
-wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" || erreur "Impossible de creer le fichier de google"
+# wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" || erreur "Impossible de creer le fichier de google"
 
-sudo dpkg -i ./discord.deb || erreur "L'installation de Discord a échoué."
+# sudo dpkg -i ./discord.deb || erreur "L'installation de Discord a échoué."
 
-sudo dpkg -i google-chrome-stable_current_amd64.deb || erreur "L'installation de Google a échoué."
+# sudo dpkg -i google-chrome-stable_current_amd64.deb || erreur "L'installation de Google a échoué."
 
 sudo apt install -y docker.io docker-compose || erreur "L'installation de Docker a échoué."
 
