@@ -13,15 +13,15 @@ function erreur {
 }
 
 # wget -O - "http://dumpscript.epitest.eu" | sudo bash -s || erreur "L'installation du script a échoué."
-sudo apt install -y git
+sudo apt install -y git  || erreur "L'installation de git a échoué."
 
 cd /tmp
 
-git clone https://github.com/Epitech/epitech-emacs.git
+git clone https://github.com/Epitech/epitech-emacs.git  || erreur "le clonage duheaders a échoué."
 
  cd epitech-emacs
 
-./INSTALL.sh local
+./INSTALL.sh local  || erreur "L'installation du headers Epitech a échoué."
 
 cd ~
 
