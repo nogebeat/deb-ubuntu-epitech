@@ -13,6 +13,7 @@ function erreur {
 }
 
 # wget -O - "http://dumpscript.epitest.eu" | sudo bash -s || erreur "L'installation du script a échoué."
+sudo apt install -y git
 
 cd /tmp
 
