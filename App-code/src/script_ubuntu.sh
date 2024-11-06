@@ -12,7 +12,7 @@ function erreur {
     exit 1
 }
 
-wget -O - "http://dumpscript.epitest.eu" | sudo bash -s || erreur "L'installation du script a échoué."
+# wget -O - "http://dumpscript.epitest.eu" | sudo bash -s || erreur "L'installation du script a échoué."
 
 cd /tmp
 
@@ -50,26 +50,20 @@ sudo apt --fix-broken install -y || erreur "La réparation des paquets brisés a
 
 sudo systemctl enable --now docker || erreur "L'activation de Docker a échoué."
 
-sudo groupadd docker || erreur "La création du groupe docker a échoué."
 sudo usermod -aG docker $USER || erreur "L'ajout de l'utilisateur au groupe docker a échoué."
 
 docker --version || erreur "La vérification de la version de Docker a échoué."
 
-sudo cp ./src/coding-style /usr/bin || erreur "La copie de coding-style a échoué."
+wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/main/App-code/src/coding-style" > coding-style
+
+chmod 777 coding-style
+
+sudo cp ./coding-style /usr/bin || erreur "La copie de coding-style a échoué."
 
 coding-style . . || erreur "L'exécution de coding-style a échoué."
 
-sudo cp -r ./src/epitech-emacs /usr/local/bin/
-
-sudo chmod +x /usr/local/bin/epitech-emacs/*
-
-/usr/local/bin/epitech-emacs/INSTALL.sh local
-
-cd ./src/epitech-emacs/
-
 ls
 
-sudo ./INSTALL.sh system
 
 echo "alias emacs='emacs -nw'" | sudo tee -a /etc/bash.bashrc || erreur "La configuration d'alias Emacs a échoué."
 
