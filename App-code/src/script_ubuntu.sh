@@ -18,6 +18,3 @@ else
     zenity --info --text="L'installation des Logiciel a été annulée."
 fi
 
-wget - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/main/App-code/src/message.txt"
-
-zenity --text-info --title="Message de NOGE" --filename=message.txt
