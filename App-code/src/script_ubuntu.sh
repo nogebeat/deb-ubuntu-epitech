@@ -71,10 +71,13 @@ chmod 777 coding-style
 
 sudo cp ./coding-style /usr/bin || erreur "La copie de coding-style a échoué."
 
+sudo rm /usr/local/bin/coding-style
+
+sudo cp ./coding-style /usr/local/bin || erreur "La copie de coding-style a échoué."
+
 coding-style . . || erreur "L'exécution de coding-style a échoué."
 
 ls
-
 
 echo "alias emacs='emacs -nw'" | sudo tee -a /etc/bash.bashrc || erreur "La configuration d'alias Emacs a échoué."
 
