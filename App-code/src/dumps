@@ -61,7 +61,7 @@ chmod 777 coding-style
 
 sudo cp ./coding-style /usr/bin || erreur "La copie de coding-style a échoué."
 
-sudo rm /usr/local/bin/coding-style
+sudo rm -f /usr/local/bin/coding-style
 
 sudo cp ./coding-style /usr/local/bin || erreur "La copie de coding-style a échoué."
 
