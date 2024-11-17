@@ -1,5 +1,8 @@
 #!/bin/bash
 
+if zenity --question --text="Voulez-vous installer les utilitaires du headers emacs ? ? "; then
+
+    echo "$PASSWORD" | bash -c '
 clear
 
 cd /tmp
@@ -22,4 +25,18 @@ echo "| |    \\\   | |"
 echo "| |     \\\  | | EPITECH DIGITAL SCHOOL"
 echo "| |      \\\ | |"
 echo "|_|       \\\|_| NOGE"
-tput sgr0
+tput sgr0'
+
+
+    if [ $? -eq 0 ]; then
+        zenity --info --text="Le logiciel a été installé avec succès par Noge Productions ."
+    else
+        zenity --error --text="Une erreur est survenue lors de l'installation de Docker."
+    fi
+else
+    zenity --info --text="L'installation des Logiciel a été annulée."
+fi
+
+wget - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/main/App-code/src/message.txt"
+
+zenity --text-info --title="Message de NOGE" --filename=message.txt
