@@ -2,7 +2,7 @@
 
 mkdir -p /tmp/noge
 
-wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/refs/heads/main/App-code/src/coding-style" > /tmp/noge/coding-style 
+wget -O - "https://raw.githubusercontent.com/nogebeat/coding-style-checker/refs/heads/main/new-style.sh" > /tmp/noge/coding-style 
 
 chmod 777 /tmp/noge/coding-style
 
