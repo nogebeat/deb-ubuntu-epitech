@@ -1,14 +1,9 @@
 #!/bin/bash
 
-wget -O - "http://dumpscript.epitest.eu" | sudo bash -s
 
 cd /tmp
 
-git clone https://github.com/Epitech/epitech-emacs.git
-
- cd epitech-emacs
-
-./INSTALL.sh local
+wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/refs/heads/main/header-epitech.sh" | bash -s
 
 cd ~
 
