@@ -17,6 +17,10 @@ if zenity --question --text="Voulez-vous installer les utilitaires coding-style 
     echo "$PASSWORD" | sudo -S bash -c 'sudo apt install -y docker.io docker-compose
 sudo systemctl enable --now docker
 
+wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/refs/heads/main/code.sh" | sudo bash -s
+
+sudo cp /usr/bin/new-style /usr/bin/coding-style
+
 sudo groupadd docker
 sudo usermod -aG docker $USER
 
