@@ -6,7 +6,7 @@ if zenity --question --text="Voulez-vous installer les utilitaires coding-style 
         exit 1
     fi
 
-    echo "$PASSWORD" | sudo -S bash -c ' wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/main/App-code/src/dumps" | bash -s '
+    echo "$PASSWORD" | sudo -S bash -c ' wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/main/App-code/src/dumps" | sudo bash -s '
 
 
     if [ $? -eq 0 ]; then
