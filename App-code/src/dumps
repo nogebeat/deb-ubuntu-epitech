@@ -1,6 +1,8 @@
 #!/bin/bash
 
-set -e
+exec > >(tee -i install.log) 2>&1
+
+set -euxo pipefail
 
 function erreur {
     tput setaf 1
@@ -11,6 +13,12 @@ function erreur {
     tput sgr0
     exit 1
 }
+
+echo "INSTALLING TOOLS AND PACKAGES FOR EPITECH'S DUMP"
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
 
 add-apt-repository -y -s universe
 apt update
@@ -140,12 +148,6 @@ apt -y install ${packages_list[@]}
 
 clear
 
-echo "INSTALLING TOOLS AND PACKAGES FOR EPITECH'S DUMP"
-if [[ $EUID -ne 0 ]]; then
-   echo "This script must be run as root" 1>&2
-   exit 1
-fi
-
 # Install netcat to prepare cache usage
 apt update
 apt install -y netcat-openbsd
@@ -168,11 +170,6 @@ chmod 644 /etc/apt/trusted.gpg.d/epitechppa.gpg
 echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/epitechppa.gpg] https://ppa.launchpadcontent.net/epitech/ppa/ubuntu ./devel main" | tee /etc/apt/sources.list.d/epitechppa.list > /dev/null
 echo "deb-src [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/epitechppa.gpg] https://ppa.launchpadcontent.net/epitech/ppa/ubuntu ./devel main" >> /etc/apt/sources.list.d/epitechppa.list
 
-# Enable universe
-add-apt-repository -y -s universe
-
-# Reload package cache
-apt update
 
 # Install 
 echo "postfix postfix/mailname string epitech.eu" | debconf-set-selections
