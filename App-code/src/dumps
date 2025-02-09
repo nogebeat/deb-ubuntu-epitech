@@ -12,66 +12,174 @@ function erreur {
     exit 1
 }
 
-# wget -O - "http://dumpscript.epitest.eu" | sudo bash -s || erreur "L'installation du script a échoué."
-sudo apt install -y git  || erreur "L'installation de git a échoué."
+add-apt-repository -y -s universe
+apt update
+apt upgrade -y
 
-cd /tmp
+echo "wireshark-common wireshark-common/install-setuid boolean true" | debconf-set-selections
 
-git clone https://github.com/Epitech/epitech-emacs.git  || erreur "le clonage duheaders a échoué."
+packages_list=(
+    avr-libc
+    build-essential
+    ca-certificates-java
+    cabal-install
+    cargo
+    clang
+    clang-tools
+    cmake
+    curl
+    diffutils
+    docker-compose
+    docker.io
+    elfutils
+    elpa-tuareg
+    emacs-nox
+    ffmpeg
+    flac
+    gcovr
+    ghc
+    golang
+    haskell-stack
+    ksh
+    liballegro5-dev
+    libboost1.74-all-dev
+    libc-bin
+    libc-dev-bin
+    libc-devtools
+    libc6
+    libc6-dbg
+    libcsfml-dev
+    libcsfml-doc
+    libcunit1
+    libcunit1-dev
+    libelf-dev
+    libfreetype-dev
+    libgmp-dev
+    libgmp10
+    libgmp10-doc
+    libgmp3-dev
+    libgmpxx4ldbl
+    libgudev-1.0-dev
+    libirrlicht-dev
+    libirrlicht1.8
+    libjpeg-turbo8-dev
+    libncurses-dev
+    libopenal-dev
+    libsdl2-dev
+    libsfml-doc
+    libuuid1
+    libvirt-dev
+    libvorbis-dev
+    libx11-doc
+    libx11-xcb-dev
+    libxcb-image0
+    libxcb-image0-dev
+    libxcb-util-dev
+    libxcb-util0-dev
+    libxcb-util1
+    libxcursor-dev
+    libxext-dev
+    libxext-doc
+    libxi-dev
+    libxinerama-dev
+    libxrandr-dev
+    locales
+    ltrace
+    mariadb-server
+    nasm
+    ncurses-base
+    net-tools
+    npm
+    nodejs
+    openjdk-21-jdk
+    openjdk-21-jre
+    php-bcmath
+    php-dev
+    php-gd
+    php-mbstring
+    php-mysql
+    php-phar-io-version
+    php-php-gettext
+    php-tokenizer
+    python3
+    python3-pycryptodome
+    python3-dev
+    python3-numpy
+    python3-pip
+    python3-pyte
+    python3-requests
+    python3-yaml
+    qt6-base-dev
+    qt6-base-dev-tools
+    rlwrap
+    ruby
+    rustc
+    strace
+    sudo
+    systemd-dev
+    tar
+    tcpdump
+    tcsh
+    tmux
+    tree
+    unzip
+    uuid-dev
+    valgrind
+    vim
+    virt-manager
+    wireshark
+    x264
+    zip
+    zsh
+    libcsfml-*
+    libcriterion
+)
 
- cd epitech-emacs
+export DEBIAN_FRONTEND=noninteractive
+apt -y install ${packages_list[@]}
 
-./INSTALL.sh local  || erreur "L'installation du headers Epitech a échoué."
+clear
 
-cd ~
+echo "INSTALLING TOOLS AND PACKAGES FOR EPITECH'S DUMP"
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
 
-sudo apt-get install -y gcc make cmake perl curl wget build-essential ocaml libncurses5-dev libncursesw5-dev git libx11-dev libxmu-dev libxi-dev libgl-dev libopenal-dev libxrandr-dev libudev-dev libglew-dev libjpeg-dev libalut-dev libcsfml-dev libqt5widgets5 libqt5websockets5 libqt5webengine5 libqt5opengl5
+# Install netcat to prepare cache usage
+apt update
+apt install -y netcat-openbsd
 
-sudo apt --fix-broken install -y || erreur "La réparation des paquets brisés a échoué."
+# Install proxy detection
+echo '#!/bin/bash
+proxy=192.168.42.1
+nc -zw1 $proxy 3142 && echo http://$proxy:3142/ || echo DIRECT
+' > /etc/apt/detect_proxy.sh
 
-sudo DEBIAN_FRONTEND=noninteractive apt-get install -y emacs || erreur "L'installation d'Emacs a échoué."
+chmod +x /etc/apt/detect_proxy.sh
 
-sudo apt --fix-broken install -y || erreur "La réparation des paquets brisés a échoué."
+echo 'Acquire::http::Proxy-Auto-Detect "/etc/apt/detect_proxy.sh";' > "/etc/apt/apt.conf.d/01acng"
 
-sudo apt install emacs-gtk -y || erreur "L'installation de Emacs via Snap a échoué."
-:
-sudo apt --fix-broken install -y || erreur "La réparation des paquets brisés a échoué."
+# Add epitech ppa signing key and repository
+rm -f /etc/apt/trusted.gpg.d/epitechppa.gpg
+gpg --homedir /tmp --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/epitechppa.gpg --keyserver keyserver.ubuntu.com --recv-keys 87daad0e2657726c
+chown root:root /etc/apt/trusted.gpg.d/epitechppa.gpg
+chmod 644 /etc/apt/trusted.gpg.d/epitechppa.gpg
+echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/epitechppa.gpg] https://ppa.launchpadcontent.net/epitech/ppa/ubuntu ./devel main" | tee /etc/apt/sources.list.d/epitechppa.list > /dev/null
+echo "deb-src [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/epitechppa.gpg] https://ppa.launchpadcontent.net/epitech/ppa/ubuntu ./devel main" >> /etc/apt/sources.list.d/epitechppa.list
 
-# wget -O discord.deb "https://discord.com/api/download?platform=linux&format=deb" || erreur "Impossible de creer le fichier discord.deb."
+# Enable universe
+add-apt-repository -y -s universe
 
-# wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" || erreur "Impossible de creer le fichier de google"
+# Reload package cache
+apt update
 
-# sudo dpkg -i ./discord.deb || erreur "L'installation de Discord a échoué."
+# Install 
+echo "postfix postfix/mailname string epitech.eu" | debconf-set-selections
+echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
+export DEBIAN_FRONTEND=noninteractive
+apt install -y epitech-dump
 
-# sudo dpkg -i google-chrome-stable_current_amd64.deb || erreur "L'installation de Google a échoué."
-
-sudo apt install -y docker.io docker-compose || erreur "L'installation de Docker a échoué."
-
-sudo apt --fix-broken install -y || erreur "La réparation des paquets brisés a échoué."
-
-sudo systemctl enable --now docker || erreur "L'activation de Docker a échoué."
-
-sudo usermod -aG docker $USER || erreur "L'ajout de l'utilisateur au groupe docker a échoué."
-
-docker --version || erreur "La vérification de la version de Docker a échoué."
-
-wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/main/App-code/src/coding-style" > coding-style
-
-chmod 777 coding-style
-
-sudo cp ./coding-style /usr/bin || erreur "La copie de coding-style a échoué."
-
-sudo rm -f /usr/local/bin/coding-style
-
-sudo cp ./coding-style /usr/local/bin || erreur "La copie de coding-style a échoué."
-
-coding-style . . || erreur "L'exécution de coding-style a échoué."
-
-ls
-
-echo "alias emacs='emacs -nw'" | sudo tee -a /etc/bash.bashrc || erreur "La configuration d'alias Emacs a échoué."
-
-source ~/.bashrc || erreur "Le rechargement de .bashrc a échoué."
 
 tput setaf 1
 echo "__**/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/CODING STYLE BY NOGE\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\**\*\*\*\*\**__"
