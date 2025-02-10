@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 sudo apt install zenity -y 
 
 if zenity --question --text="Voulez-vous installer les utilitaires Epitech ? ?"; then
