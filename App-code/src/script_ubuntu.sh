@@ -9,7 +9,7 @@ if zenity --question --text="Voulez-vous installer les utilitaires Epitech ? ?";
         exit 1
     fi
     echo "🔄 Début de l’installation..."
-    ERROR_MSG=$(echo "$PASSWORD" | sudo -S bash -c 'wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/main/App-code/src/dumps" | sudo bash -s' 2>&1)
+    ERROR_MSG=$(echo "$PASSWORD" | sudo -S bash -c 'wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/main/App-code/src/dumps" | sudo bash -s')
     echo "📌 Fin de l’exécution du script distant."
 
     if [ $? -eq 0 ]; then
