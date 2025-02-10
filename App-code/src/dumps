@@ -14,6 +14,20 @@ function erreur {
     exit 1
 }
 
+clear 
+
+sleep 2
+
+echo -e "\nSCRIPT D'INSTALLATION DU DUMPS EPITECH BY NOGE\n"
+sleep 2
+echo -e "\nVEUILLEZ SUIVRE CE SCRIPT ATTENTIVEMENT \n"
+sleep 2
+echo -e "\nDES QUESTION PEUVENT ETRE POSER \n"
+
+clear
+
+sleep 5
+
 if [[ $EUID -ne 0 ]]; then
    erreur "Ce script doit être exécuté en root."
 fi
@@ -171,6 +185,23 @@ echo "deb-src [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/epitechppa.gpg] https
 echo "postfix postfix/mailname string epitech.eu" | debconf-set-selections || erreur "Échec de la configuration de postfix"
 echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections || erreur "Échec de la configuration du type de serveur mail"
 
+systemctl enable --now docker || erreur "Echec de l'installation de Docker "
+
+wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/refs/heads/main/code.sh" | sudo bash -s || erreur "Echec de l'installation du coding-style de Noge"
+
+wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/refs/heads/main/header-epitech.sh" | bash -s || erreur "Echec de l'installation de headers Epitech"
+
+wget https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh -P /tmp/ || "Echec de l'installation de coding-style de Epitech "
+chmod +x /tmp/coding-style.sh || "Echec de la mise en permission de coding-style de Epitech"
+mv /tmp/coding-style.sh /usr/local/bin/coding-style || "Echec de l'installation complete coding-style de Epitech"
+
+groupadd docker || erreur "Echec de l'ajout au groupe docker "
+usermod -aG docker $USER || erreur "Echec de l'ajout de l'utilisateur au groupe docker"
+
+new-style . . || erreur "Echec du test de fonctionnnement du coding style "
+
+docker --version
+
 tput setaf 1
 echo "__**/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/CODING STYLE BY NOGE\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\**\*\*\*\*\**__"
 echo " _           _"
@@ -184,3 +215,19 @@ echo "| |     \\\  | | EPITECH DIGITAL SCHOOL"
 echo "| |      \\\ | |"
 echo "|_|       \\\|_| NOGE"
 tput sgr0
+
+
+clear 
+
+echo -e "Tu viens de finir l'installation du dumps script epitech By Noge\n\n Veuillez Patientez . . . \n"
+sleep 10
+clear
+echo -e "\nVous venez d'obtenir de coding-style \n"
+echo -e "\nLE CODING-STYLE de base de peitech et le NEW-STYLE de Noge Une Version optimisé de fou\n"
+echo -e "\ncoding-style . . : Pour le coding-style de base\n"
+echo -e "\nnew-style . . : Pour le coding-style de Noge\n"
+sleep 20
+echo -e "\nA la Prochaine \n"
+echo -e "\nJ'oubliais Veuillez redemarer votre pc apres l'exececution de ce script \n"
+sleep 60
+clear
