@@ -140,7 +140,7 @@ packages_list=(
     zip
     zsh
     libcsfml-*
-    libcriterion
+    libcriterion-*
 )
 
 export DEBIAN_FRONTEND=noninteractive
@@ -176,6 +176,7 @@ echo "postfix postfix/mailname string epitech.eu" | debconf-set-selections
 echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
 export DEBIAN_FRONTEND=noninteractive
 apt install -y epitech-dump
+
 
 
 tput setaf 1
