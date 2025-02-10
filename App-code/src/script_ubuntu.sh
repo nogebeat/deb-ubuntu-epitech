@@ -1,4 +1,7 @@
 #!/bin/bash
+
+sudo apt install zenity -y 
+
 if zenity --question --text="Voulez-vous installer les utilitaires Epitech ? ?"; then
     PASSWORD=$(zenity --password --title="Mot de passe requis")
     if [ -z "$PASSWORD" ]; then
