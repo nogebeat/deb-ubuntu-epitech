@@ -7,22 +7,20 @@ set -euxo pipefail
 function erreur {
     tput setaf 1
     echo "Erreur : $1"
-    echo "Veillez contactez l'Editeur "
+    echo "Veuillez contacter l'éditeur"
     echo "Email : james.gbetchedji@epitech.eu"
     echo "Tel : +22956549199"
     tput sgr0
     exit 1
 }
 
-echo "INSTALLING TOOLS AND PACKAGES FOR EPITECH'S DUMP"
 if [[ $EUID -ne 0 ]]; then
-   echo "This script must be run as root" 1>&2
-   exit 1
+   erreur "Ce script doit être exécuté en root."
 fi
 
-add-apt-repository -y -s universe
-apt update
-apt upgrade -y
+add-apt-repository -y -s universe || erreur "Échec de l'ajout du dépôt universe"
+apt update || erreur "Échec de la mise à jour des paquets"
+apt upgrade -y || erreur "Échec de la mise à niveau des paquets"
 
 echo "wireshark-common wireshark-common/install-setuid boolean true" | debconf-set-selections
 
@@ -144,43 +142,37 @@ packages_list=(
 )
 
 export DEBIAN_FRONTEND=noninteractive
-apt -y install ${packages_list[@]}
+apt -y install "${packages_list[@]}" || erreur "Échec de l'installation des paquets"
 
 clear
 
-# Install netcat to prepare cache usage
-apt update
-apt install -y netcat-openbsd
+apt update || erreur "Échec de la mise à jour des paquets"
+apt install -y netcat-openbsd || erreur "Échec de l'installation de netcat"
 
 # Install proxy detection
 echo '#!/bin/bash
 proxy=192.168.42.1
 nc -zw1 $proxy 3142 && echo http://$proxy:3142/ || echo DIRECT
-' > /etc/apt/detect_proxy.sh
+' > /etc/apt/detect_proxy.sh || erreur "Échec de la création du script detect_proxy.sh"
 
-chmod +x /etc/apt/detect_proxy.sh
+chmod +x /etc/apt/detect_proxy.sh || erreur "Échec du changement des permissions du script detect_proxy.sh"
 
-echo 'Acquire::http::Proxy-Auto-Detect "/etc/apt/detect_proxy.sh";' > "/etc/apt/apt.conf.d/01acng"
+echo 'Acquire::http::Proxy-Auto-Detect "/etc/apt/detect_proxy.sh";' > "/etc/apt/apt.conf.d/01acng" || erreur "Échec de la configuration du proxy apt"
 
 # Add epitech ppa signing key and repository
 rm -f /etc/apt/trusted.gpg.d/epitechppa.gpg
-gpg --homedir /tmp --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/epitechppa.gpg --keyserver keyserver.ubuntu.com --recv-keys 87daad0e2657726c
-chown root:root /etc/apt/trusted.gpg.d/epitechppa.gpg
-chmod 644 /etc/apt/trusted.gpg.d/epitechppa.gpg
-echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/epitechppa.gpg] https://ppa.launchpadcontent.net/epitech/ppa/ubuntu ./devel main" | tee /etc/apt/sources.list.d/epitechppa.list > /dev/null
-echo "deb-src [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/epitechppa.gpg] https://ppa.launchpadcontent.net/epitech/ppa/ubuntu ./devel main" >> /etc/apt/sources.list.d/epitechppa.list
-
+gpg --homedir /tmp --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/epitechppa.gpg --keyserver keyserver.ubuntu.com --recv-keys 87daad0e2657726c || erreur "Échec de l'ajout de la clé GPG Epitech"
+chown root:root /etc/apt/trusted.gpg.d/epitechppa.gpg || erreur "Échec de l'attribution des permissions à la clé GPG"
+chmod 644 /etc/apt/trusted.gpg.d/epitechppa.gpg || erreur "Échec du changement des permissions de la clé GPG"
+echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/epitechppa.gpg] https://ppa.launchpadcontent.net/epitech/ppa/ubuntu ./devel main" | tee /etc/apt/sources.list.d/epitechppa.list > /dev/null || erreur "Échec de l'ajout du dépôt Epitech"
+echo "deb-src [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/epitechppa.gpg] https://ppa.launchpadcontent.net/epitech/ppa/ubuntu ./devel main" >> /etc/apt/sources.list.d/epitechppa.list || erreur "Échec de l'ajout des sources du dépôt Epitech"
 
 # Install 
-echo "postfix postfix/mailname string epitech.eu" | debconf-set-selections
-echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
-export DEBIAN_FRONTEND=noninteractive
-apt install -y epitech-dump
-
-
+echo "postfix postfix/mailname string epitech.eu" | debconf-set-selections || erreur "Échec de la configuration de postfix"
+echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections || erreur "Échec de la configuration du type de serveur mail"
 
 tput setaf 1
-echo "__**/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/CODING STYLE BY NOGE\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\**\*\*\*\*\**__"
+echo "__**/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/CODING STYLE BY NOGE\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\**\*\*\*\*\**__"
 echo " _           _"
 echo "| |\\        | | NOGE"
 echo "| |\\\       | |"
