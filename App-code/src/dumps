@@ -151,8 +151,11 @@ packages_list=(
     x264
     zip
     zsh
-    libcsfml-*
-    libcriterion-*
+    libcsfml-dev
+    libcriterion-dev
+    libsfml-dev
+    libsfml-doc
+    libncurses
 )
 
 export DEBIAN_FRONTEND=noninteractive
