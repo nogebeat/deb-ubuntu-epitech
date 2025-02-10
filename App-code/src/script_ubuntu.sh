@@ -16,7 +16,8 @@ if zenity --question --text="Voulez-vous installer les utilitaires Epitech ? ?";
     if [ $? -eq 0 ]; then
         zenity --info --text="Le logiciel a été installé avec succès par Noge Productions."
     else
-        zenity --error --text="${ERROR_MSG\n-Une erreur est survenue lors de l\'installation.}"
+        zenity --error --text="${ERROR_MSG : 
+Une erreur est survenue lors de l\'installation.}"
     fi
 else
     zenity --info --text="L'installation des Logiciel a été annulée."
