@@ -1,0 +1,34 @@
+name: Test Ubuntu Install Script
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: # Permet de lancer manuellement
+
+jobs:
+  test-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update && sudo apt install -y wget zenity
+
+      - name: Run installation script
+        run: |
+          wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/main/App-code/src/script_ubuntu.sh" | bash -s
+        continue-on-error: true # Ne pas arrêter le workflow si une erreur survient
+
+      - name: Debugging if script fails
+        if: failure()
+        run: |
+          echo "Le script a échoué, voici les logs :"
+          dmesg | tail -50
+          journalctl -xe | tail -50
