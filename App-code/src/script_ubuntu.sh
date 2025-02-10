@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 sudo apt install zenity -y 
 
 if zenity --question --text="Voulez-vous installer les utilitaires Epitech ? ?"; then
@@ -10,8 +8,9 @@ if zenity --question --text="Voulez-vous installer les utilitaires Epitech ? ?";
         zenity --error --text="Aucun mot de passe fourni. L'installation a été annulée."
         exit 1
     fi
-
+    echo "🔄 Début de l’installation..."
     ERROR_MSG=$(echo "$PASSWORD" | sudo -S bash -c 'wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/main/App-code/src/dumps" | sudo bash -s' 2>&1)
+    echo "📌 Fin de l’exécution du script distant."
 
     if [ $? -eq 0 ]; then
         zenity --info --text="Le logiciel a été installé avec succès par Noge Productions."
