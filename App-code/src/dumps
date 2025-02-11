@@ -14,7 +14,7 @@ function erreur {
     exit 1
 }
 
-clear 
+[ -t 1 ] && clear 
 
 sleep 2
 
@@ -24,7 +24,7 @@ echo -e "\nVEUILLEZ SUIVRE CE SCRIPT ATTENTIVEMENT \n"
 sleep 2
 echo -e "\nDES QUESTION PEUVENT ETRE POSER \n"
 
-clear
+[ -t 1 ] && clear
 
 sleep 5
 
@@ -160,7 +160,7 @@ packages_list=(
 export DEBIAN_FRONTEND=noninteractive
 apt -y install "${packages_list[@]}" || erreur "Échec de l'installation des paquets"
 
-clear
+[ -t 1 ] && clear
 
 apt update || erreur "Échec de la mise à jour des paquets"
 apt install -y netcat-openbsd || erreur "Échec de l'installation de netcat"
@@ -219,11 +219,11 @@ echo "|_|       \\\|_| NOGE"
 tput sgr0
 
 
-clear 
+[ -t 1 ] && clear 
 
 echo -e "Tu viens de finir l'installation du dumps script epitech By Noge\n\n Veuillez Patientez . . . \n"
 sleep 10
-clear
+[ -t 1 ] && clear
 echo -e "\nVous venez d'obtenir de coding-style \n"
 echo -e "\nLE CODING-STYLE de base de peitech et le NEW-STYLE de Noge Une Version optimisé de fou\n"
 echo -e "\ncoding-style . . : Pour le coding-style de base\n"
@@ -232,4 +232,4 @@ sleep 20
 echo -e "\nA la Prochaine \n"
 echo -e "\nJ'oubliais Veuillez redemarer votre pc apres l'exececution de ce script \n"
 sleep 60
-clear
+[ -t 1 ] && clear
