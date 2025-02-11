@@ -5,9 +5,9 @@ exec > >(tee -i install.log) 2>&1
 set -euxo pipefail
 
 function erreur {
-    if [ -n "$TERM" ]; then
-    tput setaf 1
-fi
+    if [ -n $TERM ]; then
+        tput setaf 1
+    fi
 
     echo "Erreur : $1"
     echo "Veuillez contacter l'éditeur"
