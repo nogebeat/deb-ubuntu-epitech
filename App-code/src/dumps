@@ -5,7 +5,10 @@ exec > >(tee -i install.log) 2>&1
 set -euxo pipefail
 
 function erreur {
+    if [ -n "$TERM" ]; then
     tput setaf 1
+fi
+
     echo "Erreur : $1"
     echo "Veuillez contacter l'éditeur"
     echo "Email : james.gbetchedji@epitech.eu"
@@ -204,7 +207,10 @@ new-style . . || erreur "Echec du test de fonctionnnement du coding style "
 
 docker --version
 
-tput setaf 1
+if [ -n "$TERM" ]; then
+    tput setaf 1
+fi
+
 echo "__**/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/CODING STYLE BY NOGE\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\**\*\*\*\*\**__"
 echo " _           _"
 echo "| |\\        | | NOGE"
