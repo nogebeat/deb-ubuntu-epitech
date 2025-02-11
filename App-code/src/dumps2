@@ -1,0 +1,233 @@
+#!/bin/bash
+
+exec > >(tee -i install.log) 2>&1
+
+set -euxo pipefail
+
+function erreur {
+
+    echo "Erreur : $1"
+    echo "Veuillez contacter l'éditeur"
+    echo "Email : james.gbetchedji@epitech.eu"
+    echo "Tel : +22956549199"
+    
+    exit 1
+}
+
+[ -t 1 ] && clear 
+
+sleep 2
+
+echo -e "\nSCRIPT D'INSTALLATION DU DUMPS EPITECH BY NOGE\n"
+sleep 2
+echo -e "\nVEUILLEZ SUIVRE CE SCRIPT ATTENTIVEMENT \n"
+sleep 2
+echo -e "\nDES QUESTION PEUVENT ETRE POSER \n"
+
+[ -t 1 ] && clear
+
+sleep 5
+
+add-apt-repository -y -s universe || erreur "Échec de l'ajout du dépôt universe"
+apt update || erreur "Échec de la mise à jour des paquets"
+apt upgrade -y || erreur "Échec de la mise à niveau des paquets"
+
+echo "wireshark-common wireshark-common/install-setuid boolean true" | debconf-set-selections
+
+packages_list=(
+    avr-libc
+    build-essential
+    ca-certificates-java
+    cabal-install
+    cargo
+    clang
+    clang-tools
+    cmake
+    curl
+    diffutils
+    docker-compose
+    docker.io
+    elfutils
+    elpa-tuareg
+    emacs-nox
+    ffmpeg
+    flac
+    gcovr
+    ghc
+    golang
+    haskell-stack
+    ksh
+    liballegro5-dev
+    libboost1.74-all-dev
+    libc-bin
+    libc-dev-bin
+    libc-devtools
+    libc6
+    libc6-dbg
+    libcsfml-dev
+    libcsfml-doc
+    libcunit1
+    libcunit1-dev
+    libelf-dev
+    libfreetype-dev
+    libgmp-dev
+    libgmp10
+    libgmp10-doc
+    libgmp3-dev
+    libgmpxx4ldbl
+    libgudev-1.0-dev
+    libirrlicht-dev
+    libirrlicht1.8
+    libjpeg-turbo8-dev
+    libncurses-dev
+    libopenal-dev
+    libsdl2-dev
+    libsfml-doc
+    libuuid1
+    libvirt-dev
+    libvorbis-dev
+    libx11-doc
+    libx11-xcb-dev
+    libxcb-image0
+    libxcb-image0-dev
+    libxcb-util-dev
+    libxcb-util0-dev
+    libxcb-util1
+    libxcursor-dev
+    libxext-dev
+    libxext-doc
+    libxi-dev
+    libxinerama-dev
+    libxrandr-dev
+    locales
+    ltrace
+    mariadb-server
+    nasm
+    ncurses-base
+    net-tools
+    npm
+    nodejs
+    openjdk-21-jdk
+    openjdk-21-jre
+    php-bcmath
+    php-dev
+    php-gd
+    php-mbstring
+    php-mysql
+    php-phar-io-version
+    php-php-gettext
+    php-tokenizer
+    python3
+    python3-pycryptodome
+    python3-dev
+    python3-numpy
+    python3-pip
+    python3-pyte
+    python3-requests
+    python3-yaml
+    qt6-base-dev
+    qt6-base-dev-tools
+    rlwrap
+    ruby
+    rustc
+    strace
+    sudo
+    systemd-dev
+    tar
+    tcpdump
+    tcsh
+    tmux
+    tree
+    unzip
+    uuid-dev
+    valgrind
+    vim
+    virt-manager
+    wireshark
+    x264
+    zip
+    zsh
+    libcsfml-dev
+    libcriterion-dev
+    libsfml-dev
+    libsfml-doc
+)
+
+export DEBIAN_FRONTEND=noninteractive
+apt -y install "${packages_list[@]}" || erreur "Échec de l'installation des paquets"
+
+[ -t 1 ] && clear
+
+apt update || erreur "Échec de la mise à jour des paquets"
+apt install -y netcat-openbsd || erreur "Échec de l'installation de netcat"
+
+# Install proxy detection
+echo '#!/bin/bash
+proxy=192.168.42.1
+nc -zw1 $proxy 3142 && echo http://$proxy:3142/ || echo DIRECT
+' > /etc/apt/detect_proxy.sh || erreur "Échec de la création du script detect_proxy.sh"
+
+chmod +x /etc/apt/detect_proxy.sh || erreur "Échec du changement des permissions du script detect_proxy.sh"
+
+echo 'Acquire::http::Proxy-Auto-Detect "/etc/apt/detect_proxy.sh";' > "/etc/apt/apt.conf.d/01acng" || erreur "Échec de la configuration du proxy apt"
+
+# Add epitech ppa signing key and repository
+rm -f /etc/apt/trusted.gpg.d/epitechppa.gpg
+gpg --homedir /tmp --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/epitechppa.gpg --keyserver keyserver.ubuntu.com --recv-keys 87daad0e2657726c || erreur "Échec de l'ajout de la clé GPG Epitech"
+chown root:root /etc/apt/trusted.gpg.d/epitechppa.gpg || erreur "Échec de l'attribution des permissions à la clé GPG"
+chmod 644 /etc/apt/trusted.gpg.d/epitechppa.gpg || erreur "Échec du changement des permissions de la clé GPG"
+echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/epitechppa.gpg] https://ppa.launchpadcontent.net/epitech/ppa/ubuntu ./devel main" | tee /etc/apt/sources.list.d/epitechppa.list > /dev/null || erreur "Échec de l'ajout du dépôt Epitech"
+echo "deb-src [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/epitechppa.gpg] https://ppa.launchpadcontent.net/epitech/ppa/ubuntu ./devel main" >> /etc/apt/sources.list.d/epitechppa.list || erreur "Échec de l'ajout des sources du dépôt Epitech"
+
+# Install 
+echo "postfix postfix/mailname string epitech.eu" | debconf-set-selections || erreur "Échec de la configuration de postfix"
+echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections || erreur "Échec de la configuration du type de serveur mail"
+
+systemctl enable --now docker || erreur "Echec de l'installation de Docker "
+
+wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/refs/heads/main/code.sh" | sudo bash -s || erreur "Echec de l'installation du coding-style de Noge"
+
+wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/refs/heads/main/header-epitech.sh" | bash -s || erreur "Echec de l'installation de headers Epitech"
+
+wget https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh -P /tmp/ || "Echec de l'installation de coding-style de Epitech "
+chmod +x /tmp/coding-style.sh || "Echec de la mise en permission de coding-style de Epitech"
+mv /tmp/coding-style.sh /usr/local/bin/coding-style || "Echec de l'installation complete coding-style de Epitech"
+
+groupadd docker || erreur "Echec de l'ajout au groupe docker "
+usermod -aG docker $USER || erreur "Echec de l'ajout de l'utilisateur au groupe docker"
+
+new-style . . || erreur "Echec du test de fonctionnnement du coding style "
+
+docker --version
+
+
+
+
+echo "__**/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/CODING STYLE BY NOGE\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\**\*\*\*\*\**__"
+echo " _           _"
+echo "| |\\        | | NOGE"
+echo "| |\\\       | |"
+echo "| | \\\      | | EPITECH BENIN"
+echo "| |  \\\     | |"
+echo "| |   \\\    | | NOGE"
+echo "| |    \\\   | |"
+echo "| |     \\\  | | EPITECH DIGITAL SCHOOL"
+echo "| |      \\\ | |"
+echo "|_|       \\\|_| NOGE"
+
+
+
+[ -t 1 ] && clear 
+
+echo -e "Tu viens de finir l'installation du dumps script epitech By Noge\n\n Veuillez Patientez . . . \n"
+sleep 10
+[ -t 1 ] && clear
+echo -e "\nVous venez d'obtenir de coding-style \n"
+echo -e "\nLE CODING-STYLE de base de peitech et le NEW-STYLE de Noge Une Version optimisé de fou\n"
+echo -e "\ncoding-style . . : Pour le coding-style de base\n"
+echo -e "\nnew-style . . : Pour le coding-style de Noge\n"
+sleep 20
+echo -e "\nA la Prochaine \n"
+echo -e "\nJ'oubliais Veuillez redemarer votre pc apres l'exececution de ce script \n"
+sleep 60
+[ -t 1 ] && clear
