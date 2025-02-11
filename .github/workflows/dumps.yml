@@ -23,8 +23,7 @@ jobs:
 
       - name: Run installation script
         run: |
-          wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/main/App-code/src/script_ubuntu.sh" | bash -s
-        continue-on-error: true # Ne pas arrêter le workflow si une erreur survient
+          wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/refs/heads/main/App-code/src/dumps" | bash -s
 
       - name: Debugging if script fails
         if: failure()
