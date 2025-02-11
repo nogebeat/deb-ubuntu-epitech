@@ -25,4 +25,4 @@ echo "|_|       \\\|_| NOGE"
 tput sgr0
 wget - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/main/App-code/src/message.txt"
 
-zenity --text-info --title="Message de NOGE" --filename=message.txt
+cat message.txt
