@@ -5,17 +5,19 @@ exec > >(tee -i install.log) 2>&1
 set -euxo pipefail
 
 function erreur {
-    if [ -n $TERM ]; then
-        tput setaf 1
-    fi
 
     echo "Erreur : $1"
     echo "Veuillez contacter l'éditeur"
     echo "Email : james.gbetchedji@epitech.eu"
     echo "Tel : +22956549199"
-    tput sgr0
+    
     exit 1
 }
+
+if [ "$(id -u)" -ne 0 ]; then
+    echo "Erreur : Ce script doit être exécuté en tant que root." >&2
+    exit 1
+fi
 
 [ -t 1 ] && clear 
 
@@ -30,10 +32,6 @@ echo -e "\nDES QUESTION PEUVENT ETRE POSER \n"
 [ -t 1 ] && clear
 
 sleep 5
-
-if [[ $EUID -ne 0 ]]; then
-   erreur "Ce script doit être exécuté en root."
-fi
 
 add-apt-repository -y -s universe || erreur "Échec de l'ajout du dépôt universe"
 apt update || erreur "Échec de la mise à jour des paquets"
@@ -52,8 +50,6 @@ packages_list=(
     cmake
     curl
     diffutils
-    docker-compose
-    docker.io
     elfutils
     elpa-tuareg
     emacs-nox
@@ -163,6 +159,16 @@ packages_list=(
 export DEBIAN_FRONTEND=noninteractive
 apt -y install "${packages_list[@]}" || erreur "Échec de l'installation des paquets"
 
+apt remove -y docker docker.io containerd runc || true
+apt update
+apt -y install ca-certificates curl gnupg
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+apt update
+apt -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+
 [ -t 1 ] && clear
 
 apt update || erreur "Échec de la mise à jour des paquets"
@@ -207,9 +213,8 @@ new-style . . || erreur "Echec du test de fonctionnnement du coding style "
 
 docker --version
 
-if [ -n "$TERM" ]; then
-    tput setaf 1
-fi
+
+
 
 echo "__**/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/CODING STYLE BY NOGE\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\**\*\*\*\*\**__"
 echo " _           _"
@@ -222,7 +227,7 @@ echo "| |    \\\   | |"
 echo "| |     \\\  | | EPITECH DIGITAL SCHOOL"
 echo "| |      \\\ | |"
 echo "|_|       \\\|_| NOGE"
-tput sgr0
+
 
 
 [ -t 1 ] && clear 
