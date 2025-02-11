@@ -21,7 +21,7 @@ jobs:
         run: sudo apt update && sudo apt install -y wget
 
       - name: Set TERM variable
-        run: echo "export TERM=xterm" >> ~/.bashrc
+        run: echo "export TERM=xterm" >> ~/.bashrc && export TERM=xterm
 
       - name: Run installation script
         run: |
