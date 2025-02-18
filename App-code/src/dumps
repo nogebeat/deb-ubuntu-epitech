@@ -206,7 +206,6 @@ wget https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-
 chmod +x /tmp/coding-style.sh || "Echec de la mise en permission de coding-style de Epitech"
 mv /tmp/coding-style.sh /usr/local/bin/coding-style || "Echec de l'installation complete coding-style de Epitech"
 
-groupadd docker || erreur "Echec de l'ajout au groupe docker "
 usermod -aG docker $USER || erreur "Echec de l'ajout de l'utilisateur au groupe docker"
 
 new-style . . || erreur "Echec du test de fonctionnnement du coding style "
