@@ -1,4 +1,4 @@
-name: Test Ubuntu Install Script
+name: Test Ubuntu Install Script for dumps 2
 
 on:
   push:
