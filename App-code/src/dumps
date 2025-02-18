@@ -213,7 +213,15 @@ new-style . . || erreur "Echec du test de fonctionnnement du coding style "
 
 docker --version
 
+cd /tmp || erreur "deplacement dans le dossier tmp"
 
+git clone https://github.com/nogebeat/coding-style-checker.git || erreur "Erreur de clonage du repo du oding style de Nogebeat"
+
+cd coding-style-checker
+
+sudo cp lambdananas /usr/local/bin || erreur "Echec d'installation du coding style Haskell"
+
+sudo chmod +x /usr/local/binlambdananas || erreur "Echec de mise en permission de coding syle haskell"
 
 
 echo "__**/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/CODING STYLE BY NOGE\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\**\*\*\*\*\**__"
