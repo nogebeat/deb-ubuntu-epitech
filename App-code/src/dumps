@@ -157,6 +157,7 @@ packages_list=(
 )
 
 export DEBIAN_FRONTEND=noninteractive
+sudo service postfix restart
 apt -y install "${packages_list[@]}" || erreur "Échec de l'installation des paquets"
 
 apt remove -y docker docker.io containerd runc || true
