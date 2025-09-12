@@ -110,9 +110,8 @@ update-alternatives --install /usr/bin/clang clang /usr/bin/clang-20 100
 update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-20 100
 
 echo -e "${CYAN}📜 Installation du coding-style...${RESET}"
-wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/refs/heads/main/code.sh" | sudo bash -s || erreur "Echec du coding-style de Noge"
 wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/refs/heads/main/header-epitech.sh" | bash -s || erreur "Echec headers Epitech"
-wget https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh -P /tmp/
+wget https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh -P /tmp/  || erreur "Echec du coding-style de Noge"
 chmod +x /tmp/coding-style.sh
 mv /tmp/coding-style.sh /usr/local/bin/coding-style
 
