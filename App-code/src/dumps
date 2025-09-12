@@ -2,7 +2,7 @@
 
 exec > >(tee -i install.log) 2>&1
 
-set -euxo pipefail
+set -euo pipefail
 
 function erreur {
 
@@ -161,35 +161,43 @@ apt -y install "${packages_list[@]}" || erreur "Échec de l'installation des paq
 apt remove -y docker docker.io containerd runc || true
 apt update
 apt -y install ca-certificates curl gnupg
-install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
-echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-apt update
-apt -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
 
 [ -t 1 ] && clear
 
 apt update || erreur "Échec de la mise à jour des paquets"
 apt install -y netcat-openbsd || erreur "Échec de l'installation de netcat"
 
-# Install proxy detection
-echo '#!/bin/bash
-proxy=192.168.42.1
-nc -zw1 $proxy 3142 && echo http://$proxy:3142/ || echo DIRECT
-' > /etc/apt/detect_proxy.sh || erreur "Échec de la création du script detect_proxy.sh"
 
-chmod +x /etc/apt/detect_proxy.sh || erreur "Échec du changement des permissions du script detect_proxy.sh"
+add-apt-repository -y -s ppa:epitech/ppa
 
-echo 'Acquire::http::Proxy-Auto-Detect "/etc/apt/detect_proxy.sh";' > "/etc/apt/apt.conf.d/01acng" || erreur "Échec de la configuration du proxy apt"
+# Enable universe
+add-apt-repository -y -s universe
 
-# Add epitech ppa signing key and repository
-rm -f /etc/apt/trusted.gpg.d/epitechppa.gpg
-gpg --homedir /tmp --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/epitechppa.gpg --keyserver keyserver.ubuntu.com --recv-keys 87daad0e2657726c || erreur "Échec de l'ajout de la clé GPG Epitech"
-chown root:root /etc/apt/trusted.gpg.d/epitechppa.gpg || erreur "Échec de l'attribution des permissions à la clé GPG"
-chmod 644 /etc/apt/trusted.gpg.d/epitechppa.gpg || erreur "Échec du changement des permissions de la clé GPG"
-echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/epitechppa.gpg] https://ppa.launchpadcontent.net/epitech/ppa/ubuntu ./devel main" | tee /etc/apt/sources.list.d/epitechppa.list > /dev/null || erreur "Échec de l'ajout du dépôt Epitech"
-echo "deb-src [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/epitechppa.gpg] https://ppa.launchpadcontent.net/epitech/ppa/ubuntu ./devel main" >> /etc/apt/sources.list.d/epitechppa.list || erreur "Échec de l'ajout des sources du dépôt Epitech"
+# Reload package cache
+apt update
+
+# Install 
+echo "postfix postfix/mailname string epitech.eu" | debconf-set-selections
+echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
+export DEBIAN_FRONTEND=noninteractive
+apt install -y epitech-cpool
+apt install -y epitech-emacs
+apt install -y epitech-vim
+
+apt purge -y postfix
+
+snap install teams-for-linux
+
+## clang-20
+apt install -y wget
+wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | tee /etc/apt/trusted.gpg.d/llvm.asc
+echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/llvm.asc] https://apt.llvm.org/noble/ llvm-toolchain-noble-20 main" | tee /etc/apt/sources.list.d/llvm.list
+## epiclang
+wget -O - https://epitech.github.io/epiclang/key.asc | sudo tee /etc/apt/trusted.gpg.d/epiclang-apt.asc
+echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/epiclang-apt.asc] https://epitech.github.io/epiclang/ testing main" | sudo tee /etc/apt/sources.list.d/epiclang.list
+apt update
+apt install -y clang-20 epiclang
+update-alternatives --install /usr/bin/clang clang /usr/bin/clang-20 100 && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-20 100
 
 # Install 
 echo "postfix postfix/mailname string epitech.eu" | debconf-set-selections || erreur "Échec de la configuration de postfix"
