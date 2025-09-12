@@ -1,260 +1,143 @@
 #!/bin/bash
 
 exec > >(tee -i install.log) 2>&1
-
 set -euo pipefail
 
-function erreur {
+# 🎨 Couleurs
+RED="\e[31m"
+GREEN="\e[32m"
+YELLOW="\e[33m"
+BLUE="\e[34m"
+MAGENTA="\e[35m"
+CYAN="\e[36m"
+BOLD="\e[1m"
+RESET="\e[0m"
 
-    echo "Erreur : $1"
-    echo "Veuillez contacter l'éditeur"
-    echo "Email : james.gbetchedji@epitech.eu"
-    echo "Tel : +22956549199"
-    
+function erreur {
+    echo -e "${RED}❌ Erreur : $1${RESET}"
+    echo -e "${YELLOW}⚠️  Veuillez contacter l'éditeur${RESET}"
+    echo -e "📧 Email : ${CYAN}james.gbetchedji@epitech.eu${RESET}"
+    echo -e "📞 Tel : ${CYAN}+22956549199${RESET}"
     exit 1
 }
 
+# Vérif root
 if [ "$(id -u)" -ne 0 ]; then
-    echo "Erreur : Ce script doit être exécuté en tant que root." >&2
+    echo -e "${RED}❌ Ce script doit être exécuté en tant que root.${RESET}" >&2
     exit 1
 fi
 
-[ -t 1 ] && clear 
+clear
+sleep 1
 
+echo -e "${CYAN}${BOLD}"
+echo "🚀========================================🚀"
+echo "     SCRIPT D'INSTALLATION DU DUMPS"
+echo "             BY ${GREEN}NOGE${CYAN}"
+echo "🚀========================================🚀"
+echo -e "${RESET}"
 sleep 2
 
-echo -e "\nSCRIPT D'INSTALLATION DU DUMPS EPITECH BY NOGE\n"
+echo -e "${YELLOW}⚡ Veuillez suivre ce script attentivement${RESET}"
 sleep 2
-echo -e "\nVEUILLEZ SUIVRE CE SCRIPT ATTENTIVEMENT \n"
+echo -e "${YELLOW}❓ Des questions peuvent être posées${RESET}"
 sleep 2
-echo -e "\nDES QUESTION PEUVENT ETRE POSER \n"
 
-[ -t 1 ] && clear
+clear
+sleep 2
 
-sleep 5
-
+echo -e "${MAGENTA}📦 Ajout du dépôt Universe...${RESET}"
 add-apt-repository -y -s universe || erreur "Échec de l'ajout du dépôt universe"
+
+echo -e "${MAGENTA}🔄 Mise à jour des paquets...${RESET}"
 apt update || erreur "Échec de la mise à jour des paquets"
+
+echo -e "${MAGENTA}⬆️  Mise à niveau du système...${RESET}"
 apt upgrade -y || erreur "Échec de la mise à niveau des paquets"
 
 echo "wireshark-common wireshark-common/install-setuid boolean true" | debconf-set-selections
 
+# 📦 Installation packages
+echo -e "${GREEN}📥 Installation des paquets nécessaires...${RESET}"
 packages_list=(
-    avr-libc
-    build-essential
-    ca-certificates-java
-    cabal-install
-    cargo
-    clang
-    clang-tools
-    cmake
-    curl
-    diffutils
-    elfutils
-    elpa-tuareg
-    emacs-nox
-    ffmpeg
-    flac
-    gcovr
-    ghc
-    golang
-    haskell-stack
-    ksh
-    liballegro5-dev
-    libboost1.74-all-dev
-    libc-bin
-    libc-dev-bin
-    libc-devtools
-    libc6
-    libc6-dbg
-    libcsfml-dev
-    libcsfml-doc
-    libcunit1
-    libcunit1-dev
-    libelf-dev
-    libfreetype-dev
-    libgmp-dev
-    libgmp10
-    libgmp10-doc
-    libgmp3-dev
-    libgmpxx4ldbl
-    libgudev-1.0-dev
-    libirrlicht-dev
-    libirrlicht1.8
-    libjpeg-turbo8-dev
-    libncurses-dev
-    libopenal-dev
-    libsdl2-dev
-    libsfml-doc
-    libuuid1
-    libvirt-dev
-    libvorbis-dev
-    libx11-doc
-    libx11-xcb-dev
-    libxcb-image0
-    libxcb-image0-dev
-    libxcb-util-dev
-    libxcb-util0-dev
-    libxcb-util1
-    libxcursor-dev
-    libxext-dev
-    libxext-doc
-    libxi-dev
-    libxinerama-dev
-    libxrandr-dev
-    locales
-    ltrace
-    nasm
-    ncurses-base
-    net-tools
-    npm
-    nodejs
-    openjdk-21-jdk
-    openjdk-21-jre
-    php-bcmath
-    php-dev
-    php-gd
-    php-mbstring
-    php-mysql
-    php-phar-io-version
-    php-php-gettext
-    php-tokenizer
-    python3
-    python3-pycryptodome
-    python3-dev
-    python3-numpy
-    python3-pip
-    python3-pyte
-    python3-requests
-    python3-yaml
-    qt6-base-dev
-    qt6-base-dev-tools
-    rlwrap
-    ruby
-    rustc
-    strace
-    sudo
-    systemd-dev
-    tar
-    tcpdump
-    tcsh
-    tmux
-    tree
-    unzip
-    uuid-dev
-    valgrind
-    vim
-    virt-manager
-    wireshark
-    x264
-    zip
-    zsh
-    libcsfml-dev
-    libcriterion-dev
-    libsfml-dev
-    libsfml-doc
+    avr-libc build-essential ca-certificates-java cabal-install cargo
+    clang clang-tools cmake curl diffutils elfutils elpa-tuareg emacs-nox
+    ffmpeg flac gcovr ghc golang haskell-stack ksh liballegro5-dev
+    libboost1.74-all-dev libc-bin libc-dev-bin libc-devtools libc6
+    libc6-dbg libcsfml-dev libcsfml-doc libcunit1 libcunit1-dev libelf-dev
+    libfreetype-dev libgmp-dev libgmp10 libgmp10-doc libgmp3-dev
+    libgmpxx4ldbl libgudev-1.0-dev libirrlicht-dev libirrlicht1.8
+    libjpeg-turbo8-dev libncurses-dev libopenal-dev libsdl2-dev libsfml-doc
+    libuuid1 libvirt-dev libvorbis-dev libx11-doc libx11-xcb-dev
+    libxcb-image0 libxcb-image0-dev libxcb-util-dev libxcb-util0-dev
+    libxcb-util1 libxcursor-dev libxext-dev libxext-doc libxi-dev
+    libxinerama-dev libxrandr-dev locales ltrace nasm ncurses-base net-tools
+    npm nodejs openjdk-21-jdk openjdk-21-jre php-bcmath php-dev php-gd
+    php-mbstring php-mysql php-phar-io-version php-php-gettext php-tokenizer
+    python3 python3-pycryptodome python3-dev python3-numpy python3-pip
+    python3-pyte python3-requests python3-yaml qt6-base-dev qt6-base-dev-tools
+    rlwrap ruby rustc strace sudo systemd-dev tar tcpdump tcsh tmux tree unzip
+    uuid-dev valgrind vim virt-manager wireshark x264 zip zsh libcriterion-dev
+    libsfml-dev libsfml-doc
 )
-
 export DEBIAN_FRONTEND=noninteractive
 apt -y install "${packages_list[@]}" || erreur "Échec de l'installation des paquets"
 
+echo -e "${BLUE}🐳 Installation de Docker...${RESET}"
 apt remove -y docker docker.io containerd runc || true
 apt update
 apt -y install ca-certificates curl gnupg
+systemctl enable --now docker || erreur "Echec de l'installation de Docker "
 
-[ -t 1 ] && clear
-
-apt update || erreur "Échec de la mise à jour des paquets"
-apt install -y netcat-openbsd || erreur "Échec de l'installation de netcat"
-
-
+echo -e "${GREEN}⚙️ Installation outils Epitech...${RESET}"
 add-apt-repository -y -s ppa:epitech/ppa
-
-# Enable universe
-add-apt-repository -y -s universe
-
-# Reload package cache
 apt update
-
-# Install 
-echo "postfix postfix/mailname string epitech.eu" | debconf-set-selections
-echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
 export DEBIAN_FRONTEND=noninteractive
-apt install -y epitech-cpool
-apt install -y epitech-emacs
-apt install -y epitech-vim
-
+apt install -y epitech-cpool epitech-emacs epitech-vim
 apt purge -y postfix
 
 snap install teams-for-linux
 
-## clang-20
+echo -e "${BLUE}🛠️ Installation de clang-20 et epiclang...${RESET}"
 apt install -y wget
 wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | tee /etc/apt/trusted.gpg.d/llvm.asc
 echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/llvm.asc] https://apt.llvm.org/noble/ llvm-toolchain-noble-20 main" | tee /etc/apt/sources.list.d/llvm.list
-## epiclang
-wget -O - https://epitech.github.io/epiclang/key.asc | sudo tee /etc/apt/trusted.gpg.d/epiclang-apt.asc
-echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/epiclang-apt.asc] https://epitech.github.io/epiclang/ testing main" | sudo tee /etc/apt/sources.list.d/epiclang.list
+wget -O - https://epitech.github.io/epiclang/key.asc | tee /etc/apt/trusted.gpg.d/epiclang-apt.asc
+echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/epiclang-apt.asc] https://epitech.github.io/epiclang/ testing main" | tee /etc/apt/sources.list.d/epiclang.list
 apt update
 apt install -y clang-20 epiclang
-update-alternatives --install /usr/bin/clang clang /usr/bin/clang-20 100 && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-20 100
+update-alternatives --install /usr/bin/clang clang /usr/bin/clang-20 100
+update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-20 100
 
-# Install 
-echo "postfix postfix/mailname string epitech.eu" | debconf-set-selections || erreur "Échec de la configuration de postfix"
-echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections || erreur "Échec de la configuration du type de serveur mail"
+echo -e "${CYAN}📜 Installation du coding-style...${RESET}"
+wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/refs/heads/main/code.sh" | sudo bash -s || erreur "Echec du coding-style de Noge"
+wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/refs/heads/main/header-epitech.sh" | bash -s || erreur "Echec headers Epitech"
+wget https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh -P /tmp/
+chmod +x /tmp/coding-style.sh
+mv /tmp/coding-style.sh /usr/local/bin/coding-style
 
-systemctl enable --now docker || erreur "Echec de l'installation de Docker "
+usermod -aG docker $USER || erreur "Echec ajout groupe docker"
 
-wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/refs/heads/main/code.sh" | sudo bash -s || erreur "Echec de l'installation du coding-style de Noge"
-
-wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/refs/heads/main/header-epitech.sh" | bash -s || erreur "Echec de l'installation de headers Epitech"
-
-wget https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh -P /tmp/ || "Echec de l'installation de coding-style de Epitech "
-chmod +x /tmp/coding-style.sh || "Echec de la mise en permission de coding-style de Epitech"
-mv /tmp/coding-style.sh /usr/local/bin/coding-style || "Echec de l'installation complete coding-style de Epitech"
-
-usermod -aG docker $USER || erreur "Echec de l'ajout de l'utilisateur au groupe docker"
-
-new-style . . || erreur "Echec du test de fonctionnnement du coding style "
+new-style . . || erreur "Echec test coding style "
 
 docker --version
 
-cd /tmp || erreur "deplacement dans le dossier tmp"
-
-git clone https://github.com/nogebeat/coding-style-checker.git || erreur "Erreur de clonage du repo du oding style de Nogebeat"
-
+cd /tmp
+git clone https://github.com/nogebeat/coding-style-checker.git
 cd coding-style-checker
+sudo cp lambdananas /usr/local/bin
+sudo chmod +x /usr/local/bin/lambdananas
 
-sudo cp lambdananas /usr/local/bin || erreur "Echec d'installation du coding style Haskell"
+clear
+echo -e "${GREEN}${BOLD}"
+echo "✅================================================✅"
+echo "   🎉 Installation terminée avec succès ! 🎉"
+echo "   👨‍💻 Coding-Style by ${CYAN}NOGE${GREEN} prêt à l'emploi"
+echo "✅================================================✅"
+echo -e "${RESET}"
 
-sudo chmod +x /usr/local/binlambdananas || erreur "Echec de mise en permission de coding syle haskell"
-
-
-echo "__**/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/CODING STYLE BY NOGE\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\**\*\*\*\*\**__"
-echo " _           _"
-echo "| |\\        | | NOGE"
-echo "| |\\\       | |"
-echo "| | \\\      | | EPITECH BENIN"
-echo "| |  \\\     | |"
-echo "| |   \\\    | | NOGE"
-echo "| |    \\\   | |"
-echo "| |     \\\  | | EPITECH DIGITAL SCHOOL"
-echo "| |      \\\ | |"
-echo "|_|       \\\|_| NOGE"
-
-
-
-[ -t 1 ] && clear 
-
-echo -e "Tu viens de finir l'installation du dumps script epitech By Noge\n\n Veuillez Patientez . . . \n"
-sleep 10
-[ -t 1 ] && clear
-echo -e "\nVous venez d'obtenir de coding-style \n"
-echo -e "\nLE CODING-STYLE de base de peitech et le NEW-STYLE de Noge Une Version optimisé de fou\n"
-echo -e "\ncoding-style . . : Pour le coding-style de base\n"
-echo -e "\nnew-style . . : Pour le coding-style de Noge\n"
-sleep 20
-echo -e "\nA la Prochaine \n"
-echo -e "\nJ'oubliais Veuillez redemarer votre pc apres l'exececution de ce script \n"
-sleep 60
-[ -t 1 ] && clear
+echo -e "💡 Commandes disponibles :"
+echo -e "   - ${YELLOW}coding-style . .${RESET} → Vérifier avec le style officiel"
+echo -e "   - ${YELLOW}new-style . .${RESET} → Vérifier avec la version ${MAGENTA}optimisée de NOGE${RESET}"
+echo
+echo -e "${RED}⚠️  Pensez à redémarrer votre PC après l'installation !${RESET}"
