@@ -118,20 +118,21 @@ update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-20 100
 
 echo -e "${CYAN}📜 Installation du coding-style...${RESET}"
 wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/refs/heads/main/header-epitech.sh" | bash -s || erreur "Echec headers Epitech"
-wget https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh -P /tmp/  || erreur "Echec du coding-style de Noge"
+wget https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh -P /tmp/  || erreur "Echec du coding-style Noge"
 chmod +x /tmp/coding-style.sh
 mv /tmp/coding-style.sh /usr/local/bin/coding-style
 
 usermod -aG docker $USER || erreur "Echec ajout groupe docker"
 
 
-coding-style . . || erreur "Echec test coding style "
-
 docker --version
 
 cd /tmp
 git clone https://github.com/nogebeat/coding-style-checker.git
+
 cd coding-style-checker
+chmod +x new-style.sh
+cp new-style.sh /usr/local/bin/new-style
 sudo cp lambdananas /usr/local/bin
 sudo chmod +x /usr/local/bin/lambdananas
 
