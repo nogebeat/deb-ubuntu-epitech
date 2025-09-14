@@ -136,10 +136,23 @@ cp new-style.sh /usr/local/bin/new-style
 sudo cp lambdananas /usr/local/bin
 sudo chmod +x /usr/local/bin/lambdananas
 
-echo -e "${BLUE} Installation de algobox .... ${RESET}"
-wget https://www.xm1math.net/algobox/assets/files/algobox_1.1.1_ubuntu_24_04_amd64.deb -O /tmp/algobox.deb || erreur "Erreur lors du téléchargement de Algobox "
-sudo dpkg -i /tmp/algobox.deb || erreur "Erreur lors de l'installation de Algobox "
-sudo apt-get install -f -y
+echo -e "${BLUE} Installation de Algobox .... ${RESET}"
+
+# Téléchargement
+wget -q https://www.xm1math.net/algobox/assets/files/algobox_1.1.1_ubuntu_24_04_amd64.deb -O /tmp/algobox.deb \
+    || erreur "Erreur lors du téléchargement de Algobox "
+
+# Installation brute avec dpkg
+sudo dpkg -i /tmp/algobox.deb
+
+# Correction des dépendances si besoin
+if [ $? -ne 0 ]; then
+    echo -e "${YELLOW} 📦 Résolution des dépendances manquantes... ${RESET}"
+    sudo apt-get install -f -y || erreur "Impossible de résoudre les dépendances de Algobox"
+fi
+
+echo -e "${GREEN} ✅ Algobox a été installé avec succès ! ${RESET}"
+
 
 
 clear
