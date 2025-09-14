@@ -53,7 +53,7 @@ class Installer(Gtk.Window):
     def run_install(self, password):
         try:
             cmd = 'wget -O - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/main/App-code/src/dumps" | sudo -S bash -s'
-            subprocess.run(cmd, input=(password+"\n").encode(), shell=True, check=True)
+            subprocess.run(cmd, input=(password+"\n"), shell=True, check=True)
             self.show_info("✅ Logiciel installé avec succès par Noge Productions.")
         except subprocess.CalledProcessError:
             self.show_error("❌ Erreur lors de l'installation.")
