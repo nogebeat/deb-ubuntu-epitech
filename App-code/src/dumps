@@ -78,7 +78,8 @@ packages_list=(
     python3-pyte python3-requests python3-yaml qt6-base-dev qt6-base-dev-tools
     rlwrap ruby rustc strace sudo systemd-dev tar tcpdump tcsh tmux tree unzip
     uuid-dev valgrind vim virt-manager wireshark x264 zip zsh libcriterion-dev
-    libsfml-dev libsfml-doc
+    libsfml-dev libsfml-doc libc6 libstdc++6 libqt5core5t64 libqt5gui5t64 libqt5network5t64
+    libqt5widgets5t64 libqt5printsupport5t64 libqt5webchannel5 libqt5webenginewidgets5 libqt5xml5t64
 )
 export DEBIAN_FRONTEND=noninteractive
 apt -y install "${packages_list[@]}" || erreur "Échec de l'installation des paquets"
