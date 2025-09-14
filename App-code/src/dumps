@@ -125,7 +125,7 @@ mv /tmp/coding-style.sh /usr/local/bin/coding-style
 usermod -aG docker $USER || erreur "Echec ajout groupe docker"
 
 
-new-style . . || erreur "Echec test coding style "
+coding-style . . || erreur "Echec test coding style "
 
 docker --version
 
