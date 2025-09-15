@@ -46,6 +46,12 @@ sleep 2
 clear
 sleep 2
 
+export DEBIAN_FRONTEND=noninteractive
+APT_OPTIONS="-y -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confold"
+
+# Dire à debconf de ne pas poser de question sur grub
+echo "grub-pc grub-pc/install_devices_empty boolean true" | debconf-set-selections
+
 echo -e "${MAGENTA}📦 Ajout du dépôt Universe...${RESET}"
 add-apt-repository -y -s universe || erreur "Échec de l'ajout du dépôt universe"
 
@@ -53,7 +59,7 @@ echo -e "${MAGENTA}🔄 Mise à jour des paquets...${RESET}"
 apt update || erreur "Échec de la mise à jour des paquets"
 
 echo -e "${MAGENTA}⬆️  Mise à niveau du système...${RESET}"
-apt upgrade -y || erreur "Échec de la mise à niveau des paquets"
+apt $APT_OPTIONS upgrade -y || erreur "Échec de la mise à niveau des paquets"
 
 echo "wireshark-common wireshark-common/install-setuid boolean true" | debconf-set-selections
 
