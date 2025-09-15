@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-if whiptail --title "Installation Epitech" --yesno "Voulez-vous installer les utilitaires Epitech ?" 10 60; then
+if whiptail --title "Installation Epitech" --yesno "Voulez-vous installer les utilitaires Epitech ?\n si oui Merci de maintenant votre appareil connecté à internet " 10 60; then
     # Demande de mot de passe
     PASSWORD=$(whiptail --title "Mot de passe requis" --passwordbox "Veuillez entrer votre mot de passe :" 10 60 3>&1 1>&2 2>&3)
 
