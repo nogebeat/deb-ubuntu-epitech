@@ -170,7 +170,7 @@ step "install_docker" install_docker
 
 step "install_tools" install_tools
 
-step "install_clang_epiclang" install_clang_epiclang
+# step "install_clang_epiclang" install_clang_epiclang
 step "install_coding_style" install_coding_style
 step "setup_user" setup_user
 step "install_new_style" install_new_style
