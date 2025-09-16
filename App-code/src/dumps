@@ -105,9 +105,15 @@ function install_tools {
 function install_clang_epiclang {
     apt install -y wget
     wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | tee /etc/apt/trusted.gpg.d/llvm.asc
-    echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/llvm.asc] https://apt.llvm.org/noble/ llvm-toolchain-noble-20 main" | tee /etc/apt/sources.list.d/llvm.list
-    wget -O - https://epitech.github.io/epiclang/key.asc | tee /etc/apt/trusted.gpg.d/epiclang-apt.asc
-    echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/epiclang-apt.asc] https://epitech.github.io/epiclang/ testing main" | tee /etc/apt/sources.list.d/epiclang.list
+    if [ "$arch" = "x86_64" ]; then
+        echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/llvm.asc] https://apt.llvm.org/noble/ llvm-toolchain-noble-20 main" | tee /etc/apt/sources.list.d/llvm.list
+        wget -O - https://epitech.github.io/epiclang/key.asc | tee /etc/apt/trusted.gpg.d/epiclang-apt.asc
+        echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/epiclang-apt.asc] https://epitech.github.io/epiclang/ testing main" | tee /etc/apt/sources.list.d/epiclang.list
+    fi else
+        echo "deb [arch=arm64 signed-by=/etc/apt/trusted.gpg.d/llvm.asc] https://apt.llvm.org/noble/ llvm-toolchain-noble-20 main" | tee /etc/apt/sources.list.d/llvm.list
+        wget -O - https://epitech.github.io/epiclang/key.asc | tee /etc/apt/trusted.gpg.d/epiclang-apt.asc
+        echo "deb [arch=arm64 signed-by=/etc/apt/trusted.gpg.d/epiclang-apt.asc] https://epitech.github.io/epiclang/ testing main" | tee /etc/apt/sources.list.d/epiclang.list
+    fi
     apt update
     apt install -y clang-20 epiclang
     update-alternatives --install /usr/bin/clang clang /usr/bin/clang-20 100
