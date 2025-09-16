@@ -41,7 +41,7 @@ sleep 2
 echo -e "${YELLOW}⚡ Veuillez suivre ce script attentivement${RESET}"
 sleep 2
 echo -e "${YELLOW}❓ Des questions peuvent être posées${RESET}"
-sleep 2
+sleep 5
 
 clear
 sleep 2
@@ -117,10 +117,10 @@ systemctl enable --now docker || erreur "Echec de l'installation de Docker "
 sudo systemctl status docker
 
 echo -e "${GREEN}⚙️ Installation outils Epitech...${RESET}"
-add-apt-repository -y -s ppa:epitech/ppa
-apt update
-export DEBIAN_FRONTEND=noninteractive
-apt install -y epitech-cpool epitech-emacs epitech-vim
+# add-apt-repository -y -s ppa:epitech/ppa
+# apt update
+# export DEBIAN_FRONTEND=noninteractive
+# apt install -y epitech-cpool epitech-emacs epitech-vim
 apt purge -y postfix
 
 snap install teams-for-linux
