@@ -8,8 +8,11 @@ git clone https://github.com/Epitech/epitech-emacs.git
 
  cd epitech-emacs
 
+./INSTALL.sh local
 
-./INSTALL.sh system
+if  [ "$(id -u)" -eq 0 ] then
+    ./INSTALL.sh system
+fi
 
 wget - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/main/App-code/src/message.txt"
 
