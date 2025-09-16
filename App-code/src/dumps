@@ -46,6 +46,8 @@ sleep 2
 clear
 sleep 2
 
+add-apt-repository --remove ppa:epitech/ppa
+
 echo -e "${MAGENTA}📦 Ajout du dépôt Universe...${RESET}"
 add-apt-repository -y -s universe || erreur "Échec de l'ajout du dépôt universe"
 
