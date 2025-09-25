@@ -19,3 +19,5 @@ wget - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/main/App-c
 cat message.txt
 
 rm message.txt
+
+cd ~/
