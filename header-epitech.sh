@@ -14,6 +14,8 @@ if  [ "$(id -u)" -eq 0 ] then
     ./INSTALL.sh system
 fi
 
+wget -O - https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/refs/heads/main/code.sh | sudo bash -s
+
 wget - "https://raw.githubusercontent.com/nogebeat/deb-ubuntu-epitech/main/App-code/src/message.txt"
 
 cat message.txt
